@@ -46,3 +46,45 @@ print(df.head())
 print("\n--- Value Counts for New Columns ---")
 print("\nStatus of players:")
 print(df['Status'].value_counts())
+
+print("\n--- Value Counts for New Columns ---")
+print("\nStatus of players:")
+print(df['Status'].value_counts())
+
+
+# Descriptive Statistics
+
+print("\n--- Numerical Data Summary ---")
+# Use .describe() for a quick statistical summary of numerical columns.
+# We'll focus on the cost in crores for this analysis.
+print("Statistical summary for 'COST IN ₹ (CR.)':")
+print(df['COST IN ₹ (CR.)'].describe())
+
+
+print("\n--- Categorical Data Summary ---")
+# Count unique values for important categorical columns.
+
+print("\nNumber of players by their 'TYPE' (Role):")
+print(df['TYPE'].value_counts())
+
+print("\nNumber of players by their auction 'Status':")
+print(df['Status'].value_counts())
+
+# We can also check the number of unique teams players were sold to.
+# This will include a count for 'Unsold' players if we don't filter.
+# Let's look at the teams that bought players.
+sold_players_df = df[df['Status'] == 'Sold']
+print("\nNumber of players bought by each 'Team':")
+print(sold_players_df['Team'].value_counts())
+
+def convert_base_price(price):
+    if isinstance(price, str):
+        price = price.lower()
+        if 'cr' in price:
+            return float(price.replace('cr', '').strip())
+        if 'lakh' in price:
+            return float(price.replace('lakh', '').strip()) / 100
+    return 0 # For 'Draft Pick' or other non-numeric values
+
+df['Base_Price_CR'] = df['Base Price'].apply(convert_base_price)
+print("Created numerical 'Base_Price_CR' column.")
