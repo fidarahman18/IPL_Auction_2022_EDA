@@ -1,0 +1,48 @@
+import pandas as pd
+import numpy as np
+
+# Load the dataset into a DataFrame
+df = pd.read_csv(r"C:\Users\fida18\Downloads\ipl_2022_dataset.csv")
+
+# Understand the shape of the data (rows, columns)
+print("Shape of dataset:", df.shape)
+
+# Get concise summary of the DataFrame, including data types and non-null counts
+print("Info about dataset:")
+print(df.info())
+
+# View the first 5 rows of the dataset to get a sample and look for missing values
+print("First 5 rows of dataset:")
+print(df.head())
+
+print("\n--- Handling Missing Values ---")
+# Check for missing values in each column.
+print("Missing values per column:")
+print(df.isnull().sum())
+# For '2021 Squad', a null value means the player wasn't in a squad in 2021.
+
+df['2021 Squad'].fillna('Not Applicable', inplace=True)
+print("\nMissing values handled for '2021 Squad'.")
+
+
+print("\n--- Correcting Data Types ---")
+# The 'COST IN ₹ (CR.)' and 'Cost IN $ (000)' columns seem to be objects (strings) if they contain non-numeric values.
+# Let's inspect them and convert to numeric types if necessary.
+# No explicit conversion needed if they are already numeric, but it's good practice to check.
+df['COST IN ₹ (CR.)'] = pd.to_numeric(df['COST IN ₹ (CR.)'], errors='coerce').fillna(0)
+df['Cost IN $ (000)'] = pd.to_numeric(df['Cost IN $ (000)'], errors='coerce').fillna(0)
+print("Data types for cost columns verified and corrected.")
+
+
+print("\n--- Feature Engineering ---")
+#Create a 'Status' column (Sold/Unsold)
+# If the cost is greater than 0, the player was sold.
+df['Status'] = np.where(df['COST IN ₹ (CR.)'] > 0, 'Sold', 'Unsold')
+print("Created 'Status' column.")
+
+print("\n--- Final Cleaned DataFrame ---")
+print(df.head())
+
+print("\n--- Value Counts for New Columns ---")
+print("\nStatus of players:")
+print(df['Status'].value_counts())
