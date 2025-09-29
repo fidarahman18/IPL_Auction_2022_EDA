@@ -44,6 +44,5 @@ Exploratory Data Analysis (EDA): Using visualizations to understand distribution
 Data Storytelling: Communicating findings with clear, well-structured visuals.
 
 # Author
-Fida Rahman 
-LinkedIn: www.linkedin.com/in/fida-rahman-9aa60b335
+Fida Rahman || LinkedIn: www.linkedin.com/in/fida-rahman-9aa60b335
 
