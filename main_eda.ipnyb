@@ -4,6 +4,7 @@ import numpy as np
 # Load the dataset into a DataFrame
 df = pd.read_csv(r"C:\Users\fidaw\Downloads\ipl_2022_dataset.csv")
 
+
 # Understand the shape of the data (rows, columns)
 print("Shape of dataset:", df.shape)
 
@@ -93,7 +94,7 @@ import seaborn as sns
 
 #Histogram for Sold Price
 plt.figure(figsize=(10, 6))
-sns.histplot(sold_players_db['COST IN ₹ (CR.)'], bins=20, kde=True)
+sns.histplot(sold_players_df['COST IN ₹ (CR.)'], bins=20, kde=True)
 plt.title('Distribution of Sold Prices (in Crores)')
 plt.xlabel('Cost in ₹ (CR.)')
 plt.ylabel('Number of Players')
@@ -101,7 +102,7 @@ plt.show()
 
 #Bar Chart for Player Status (Sold vs. Unsold)
 plt.figure(figsize=(8, 5))
-sns.countplot(x='Status', data=db)
+sns.countplot(x='Status', data=df)
 plt.title('Count of Sold vs. Unsold Players')
 plt.xlabel('Status')
 plt.ylabel('Count')
@@ -109,7 +110,7 @@ plt.show()
 
 #Bar Chart for Player Roles (TYPE)
 plt.figure(figsize=(10, 6))
-sns.countplot(x='TYPE', data=db)
+sns.countplot(x='TYPE', data=df)
 plt.title('Count of Players by Role')
 plt.xlabel('Player Role')
 plt.ylabel('Count')
@@ -117,7 +118,7 @@ plt.xticks(rotation=45)
 plt.show()
 
 #total amount spent by each team
-team_spending = sold_players_db.groupby('Team')['COST IN ₹ (CR.)'].sum().sort_values(ascending=False)
+team_spending = sold_players_df.groupby('Team')['COST IN ₹ (CR.)'].sum().sort_values(ascending=False)
 
 # bar chart
 plt.figure(figsize=(15, 8))
@@ -131,7 +132,7 @@ plt.show()
 print("Finding: This visual clearly highlights which teams invested the most money in the auction. You can quickly identify the top-spending and most frugal teams.")
 
 # number of players for each role
-player_roles = db['TYPE'].value_counts()
+player_roles = df['TYPE'].value_counts()
 
 # pie chart
 plt.figure(figsize=(10, 10))
@@ -144,11 +145,9 @@ print("Finding: This chart provides an immediate understanding of the compositio
 
 # histogram for final sold prices
 plt.figure(figsize=(12, 7))
-sns.histplot(sold_players_db['COST IN ₹ (CR.)'], bins=15, kde=True, color='dodgerblue')
+sns.histplot(sold_players_df['COST IN ₹ (CR.)'], bins=15, kde=True, color='dodgerblue')
 plt.title('Distribution of Final Player Prices', fontsize=16, fontweight='bold')
 plt.xlabel('Cost (in ₹ Crores)', fontsize=12)
 plt.ylabel('Number of Players', fontsize=12)
 plt.show()
 print("Finding: This visualization reveals that a vast majority of players were sold for prices under 5 Crores. The long tail to the right shows that very few players commanded exceptionally high prices, making them rare and valuable assets.")
-
-
