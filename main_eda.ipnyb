@@ -88,3 +88,68 @@ def convert_base_price(price):
 
 df['Base_Price_CR'] = df['Base Price'].apply(convert_base_price)
 print("Created numerical 'Base_Price_CR' column.")
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#Histogram for Sold Price
+plt.figure(figsize=(10, 6))
+sns.histplot(sold_players_db['COST IN ₹ (CR.)'], bins=20, kde=True)
+plt.title('Distribution of Sold Prices (in Crores)')
+plt.xlabel('Cost in ₹ (CR.)')
+plt.ylabel('Number of Players')
+plt.show()
+
+#Bar Chart for Player Status (Sold vs. Unsold)
+plt.figure(figsize=(8, 5))
+sns.countplot(x='Status', data=db)
+plt.title('Count of Sold vs. Unsold Players')
+plt.xlabel('Status')
+plt.ylabel('Count')
+plt.show()
+
+#Bar Chart for Player Roles (TYPE)
+plt.figure(figsize=(10, 6))
+sns.countplot(x='TYPE', data=db)
+plt.title('Count of Players by Role')
+plt.xlabel('Player Role')
+plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.show()
+
+#total amount spent by each team
+team_spending = sold_players_db.groupby('Team')['COST IN ₹ (CR.)'].sum().sort_values(ascending=False)
+
+# bar chart
+plt.figure(figsize=(15, 8))
+sns.barplot(x=team_spending.index, y=team_spending.values, palette='viridis')
+plt.title('Total Money Spent by Each Team', fontsize=16, fontweight='bold')
+plt.xlabel('Team', fontsize=12)
+plt.ylabel('Total Cost (in ₹ Crores)', fontsize=12)
+plt.xticks(rotation=45, ha='right')
+plt.tight_layout() # Adjusts plot to prevent labels from overlapping
+plt.show()
+print("Finding: This visual clearly highlights which teams invested the most money in the auction. You can quickly identify the top-spending and most frugal teams.")
+
+# number of players for each role
+player_roles = db['TYPE'].value_counts()
+
+# pie chart
+plt.figure(figsize=(10, 10))
+plt.pie(player_roles, labels=player_roles.index, autopct='%1.1f%%', startangle=140,
+        wedgeprops={'edgecolor': 'black'}, textprops={'fontsize': 12})
+plt.title('Percentage of Players by Role', fontsize=16, fontweight='bold')
+plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+plt.show()
+print("Finding: This chart provides an immediate understanding of the composition of the auction list. It's clear that All-Rounders and Bowlers were the most numerous categories.")
+
+# histogram for final sold prices
+plt.figure(figsize=(12, 7))
+sns.histplot(sold_players_db['COST IN ₹ (CR.)'], bins=15, kde=True, color='dodgerblue')
+plt.title('Distribution of Final Player Prices', fontsize=16, fontweight='bold')
+plt.xlabel('Cost (in ₹ Crores)', fontsize=12)
+plt.ylabel('Number of Players', fontsize=12)
+plt.show()
+print("Finding: This visualization reveals that a vast majority of players were sold for prices under 5 Crores. The long tail to the right shows that very few players commanded exceptionally high prices, making them rare and valuable assets.")
+
+
