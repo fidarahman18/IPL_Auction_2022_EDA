@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Load the dataset into a DataFrame
-df = pd.read_csv(r"C:\Users\fida18\Downloads\ipl_2022_dataset.csv")
+df = pd.read_csv(r"C:\Users\fidaw\Downloads\ipl_2022_dataset.csv")
 
 # Understand the shape of the data (rows, columns)
 print("Shape of dataset:", df.shape)
@@ -28,7 +28,6 @@ print("\nMissing values handled for '2021 Squad'.")
 print("\n--- Correcting Data Types ---")
 # The 'COST IN ₹ (CR.)' and 'Cost IN $ (000)' columns seem to be objects (strings) if they contain non-numeric values.
 # Let's inspect them and convert to numeric types if necessary.
-# No explicit conversion needed if they are already numeric, but it's good practice to check.
 df['COST IN ₹ (CR.)'] = pd.to_numeric(df['COST IN ₹ (CR.)'], errors='coerce').fillna(0)
 df['Cost IN $ (000)'] = pd.to_numeric(df['Cost IN $ (000)'], errors='coerce').fillna(0)
 print("Data types for cost columns verified and corrected.")
